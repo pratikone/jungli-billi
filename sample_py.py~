@@ -39,7 +39,7 @@ for x in range(100,200,10):
 ladoozgroup = pygame.sprite.Group(ladooz)
 khayaLadooz=[]
 for x in range(0,9):
-	bomb = Bomb('bomb.png', (randint(0,600), randint(0,440)), (20,20))
+	bomb = Bomb('bomb.png', (randint(0,600), randint(0,440)), (30,30))
 	#khayaLadooz.append(pygame.sprite.spritecollide(bomb, ladoozgroup, False))
 	bombs.append(bomb)
 
@@ -73,6 +73,17 @@ while True:
 		windowSurfaceObj.blit(mithai.image,(mithai.x,mithai.y))
 	
 	khayaLadooz=pygame.sprite.spritecollide(catSurfaceObj, ladoozgroup, True)
+
+	collisionList=pygame.sprite.spritecollide(catSurfaceObj, bombsgroup, False)	
+	if collisionList:
+		collidedBomb=lalooList[0]	
+		for index,bomb in enumerate(bombs):
+			if collidedBomb is bomb:
+				bombs[index]=Bomb('boom.png',(collidedBomb.x,collidedBomb.y),(60,60))
+		del collidedBomb
+		del collisionList
+
+	
 	if pygame.sprite.spritecollide(catSurfaceObj, bombsgroup, False):
 		msgBombTouch = Message.Message("I will kill you X-(")
 		windowSurfaceObj.blit(msgBombTouch.image,(10,80))	

@@ -73,6 +73,17 @@ while True:
 		windowSurfaceObj.blit(mithai.image,(mithai.x,mithai.y))
 	
 	khayaLadooz=pygame.sprite.spritecollide(catSurfaceObj, ladoozgroup, True)
+
+	collisionList=pygame.sprite.spritecollide(catSurfaceObj, bombsgroup, False)	
+	if collisionList:
+		collidedBomb=collisionList[0]	
+		for index,bomb in enumerate(bombs):
+			if collidedBomb is bomb:
+				bombs[index]=Bomb('boom.png',(collidedBomb.x,collidedBomb.y),(60,60))
+		del collidedBomb
+		del collisionList
+
+	
 	if pygame.sprite.spritecollide(catSurfaceObj, bombsgroup, False):
 		msgBombTouch = Message.Message("I will kill you X-(")
 		windowSurfaceObj.blit(msgBombTouch.image,(10,80))	
